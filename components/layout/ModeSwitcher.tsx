@@ -39,7 +39,7 @@ export default function RadarFilterMode() {
                   {/* Lớp nền chính */}
                   <motion.div
                     layoutId="radar-pill"
-                    className="absolute inset-0 bg-[#4a56e2] rounded-full shadow-lg shadow-[#4a56e2]/40"
+                    className="absolute inset-0 bg-primary rounded-full shadow-lg shadow-primary/40"
                     transition={{ type: "spring", stiffness: 350, damping: 25 }}
                   />
                   
@@ -53,7 +53,7 @@ export default function RadarFilterMode() {
                       ease: "easeOut",
                       delay: 0.2
                     }}
-                    className="absolute inset-0 rounded-full border border-[#4a56e2]"
+                    className="absolute inset-0 rounded-full border border-primary"
                   />
                 </>
               )}

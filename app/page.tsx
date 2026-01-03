@@ -3,6 +3,7 @@ import ShapeBlur from '../components/ShapeBlur';
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+
 import {
   Bell,
   Mic,
@@ -18,15 +19,32 @@ import {
   Lock,
   Globe,
   Users,
+  Pin,
+  Share2,
+  Heart,
 } from "lucide-react";
 import Link from "next/link";
 import ModeSwitcher from '@/components/layout/ModeSwitcher';
+import Map from '@/components/layout/Map';
+
+import { FloatingDock } from '@/components/ui/floating-dock';
+import { FloatingDockDemo } from '@/components/layout/FloatingDock';
+import ShatterMicButton from '@/components/layout/ShatterMicButton';
+import NotificationBell from '@/components/layout/NotificationBell';
+import { useState } from 'react';
+import PreviewVoicePin from '@/components/layout/PreviewVoicePin';
+import { WaveDock } from '@/components/layout/WaveDock';
+import { WhispererBadge } from '@/components/layout/WhispererBadge';
+import FriendBox from '@/components/layout/FriendBox';
+import VoicePinPreview from '@/components/layout/VoicePinPreview';
+import CreateVoiceModal from '@/components/layout/CreateVoiceModal';
 
 // Fix icon mặc định của Leaflet
 const DefaultIcon = L.icon({
   iconUrl: "/leaflet/marker-icon.png",
   shadowUrl: "/leaflet/marker-shadow.png",
 });
+
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const center: [number, number] = [10.762622, 106.660172];
@@ -92,60 +110,55 @@ const randomVoices = [
 ];
 
 export default function HomeWhisper() {
+  const [showPreview, setShowPreview] = useState(false);
+  const [voiceData, setVoiceData] = useState(null);
+
+  // Giả lập flow: Bấm Mic -> Nổ -> Record xong -> Hiện Preview
+  const handleRecordingFinished = () => {
+    // Logic của bạn khi record xong (ví dụ upload file xong)
+    console.log("Recording finished, fetching data...");
+
+    // Giả lập delay 1 xíu rồi hiện modal
+    setShowPreview(true);
+  };
   return (
     <main className="relative w-screen h-screen overflow-hidden bg-gradient-to-br from-[#dfe7ff] via-[#edf1ff] to-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(114,130,255,0.15),_transparent_60%)]" />
 
       {/* ===================== TOP RIGHT ===================== */}
       <div className="absolute top-6 right-6 flex items-center gap-4 z-[500]">
-        <div className="p-3 bg-white/70 border border-white/60 backdrop-blur-xl rounded-full shadow-lg shadow-black/10">
-          <Bell size={18} className="text-gray-700" />
+
+
+        {/* Trường hợp có thông báo
+        <div>
+          <p className="mb-2 text-sm text-gray-500">Có thông báo:</p>
+          <NotificationBell hasNotification={true} />
         </div>
+
+        Trường hợp không có thông báo
+        <div>
+          <p className="mb-2 text-sm text-gray-500">Bình thường:</p>
+          <NotificationBell hasNotification={false} />
+        </div> */}
+
         <Link href="/login">
-          <div className="flex items-center gap-3 bg-white/80 border border-white rounded-full px-3 py-1 shadow-lg shadow-black/10">
-            <div className="text-right">
-              <p className="text-xs uppercase tracking-wider text-gray-400">
-                Whisperer
-              </p>
-              <p className="text-sm font-semibold text-gray-700">Juno R.</p>
-            </div>
-            <div className="w-10 h-10 bg-gradient-to-br from-[#4a56e2] to-[#8893ff] rounded-full shadow-inner flex items-center justify-center font-semibold text-white text-xs">
-              JR
-            </div>
-          </div>
+          <WhispererBadge
+            name="Juno R."
+            role="Whisperer"
+            initials="JR"
+          />
         </Link>
       </div>
 
-      {/* ==================== TOP TOGGLE ==================== */}
-      {/* <div
-        className="absolute top-6 left-1/2 -translate-x-1/2 z-[500]
-        bg-white/80 border border-white/70 backdrop-blur-xl shadow-xl rounded-full px-3 py-2 flex gap-2"
-      >
-        {[
-          { label: "Public", icon: <Globe size={18} /> },
-          { label: "Friend", icon: <Users size={18} /> },
-          { label: "Private", icon: <Lock size={18} /> },
-        ].map((mode, idx) => {
-          const active = idx === 0;
-          return (
-            <button
-              key={mode.label}
-              className={`flex items-center gap-2 px-4 py-1.5 text-sm rounded-full transition ${active
-                ? "bg-[#4a56e2] text-white shadow-lg shadow-[#4a56e2]/30"
-                : "text-gray-500 hover:text-gray-800"
-                }`}
-            >
-              {mode.icon}
-              {mode.label}
-            </button>
-          );
-        })}
-      </div> */}
-
       {/* ==================== LEFT SIDEBAR ==================== */}
-<ModeSwitcher />
+      <ModeSwitcher />
+      {/* <PreviewVoicePin isOpen={false} onClose={function (): void {
+        throw new Error('Function not implemented.');
+      } } onPost={function (description: string): void {
+        throw new Error('Function not implemented.');
+      } } /> */}
       {/* ==================== LEFT ICON SIDEBAR ==================== */}
-      <aside
+      {/* <aside
         className="absolute top-1/2 -translate-y-1/2 left-6 z-[500]
         w-20 bg-white/80 border border-white/70 backdrop-blur-2xl shadow-[0_15px_45px_rgba(110,121,182,0.25)]
         rounded-[40px] py-5 flex flex-col items-center "
@@ -163,13 +176,13 @@ export default function HomeWhisper() {
             )}
           </div>
         ))}
-      </aside>
+      </aside> */}
 
-
+      <FloatingDockDemo />
 
 
       {/* ================= RIGHT TRENDING / RANDOM ================= */}
-      <section
+      {/* <section
         className="absolute top-24 right-6 w-80 z-[500]
         bg-white/85 border border-white/60 backdrop-blur-2xl rounded-3xl p-6 shadow-[0_20px_60px_rgba(80,89,152,0.28)]"
       >
@@ -217,9 +230,28 @@ export default function HomeWhisper() {
           <Compass size={18} />
           Listen Nearby
         </button>
-      </section>
+      </section> */}
 
       {/* ================= LEFT VOICE PIN STACK ================= */}
+      <FriendBox friends={[
+        {
+          id: 'f1',
+          name: 'Luna M.',
+          avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+          status: 'online',
+        },
+        {
+          id: 'f2',
+          name: 'Eli R.',
+          avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+          status: 'recording',
+        },
+        {
+          id: 'f3',
+          name: 'Mia S.',
+          avatar: 'https://randomuser.me/api/portraits/women/12.jpg',
+          status: 'offline',
+        }]} />
       {/* <section
         className="absolute top-24 left-28 max-w-sm z-[500]
         space-y-5"
@@ -311,30 +343,9 @@ export default function HomeWhisper() {
       </section> */}
 
       {/* ======================= MAP ======================= */}
-      <MapContainer
-        center={center}
-        zoom={13}
-        scrollWheelZoom={true}
-        className="w-full h-full z-[100]"
-      >
-        <TileLayer
-          attribution="&copy; CARTO"
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        />
-        {voicePins.map((pin) => (
-          <Marker key={pin.id} position={pin.coords}>
-            <Popup>
-              <div className="space-y-1">
-                <p className="text-sm font-semibold">{pin.snippet}</p>
-                <p className="text-xs text-gray-500">{pin.location}</p>
-                <p className="text-xs text-gray-400">
-                  {pin.listens} listens · {pin.ago}
-                </p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+<div className="absolute inset-0 z-0">
+        <Map />
+      </div>
 
       {/* =================== VOICE PIN OVERLAY ================ */}
       {/* <section className="pointer-events-none absolute inset-0 z-[400] flex items-center justify-center">
@@ -346,9 +357,19 @@ export default function HomeWhisper() {
       </section> */}
 
       {/* ================== BOTTOM RECORD BAR ================== */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[500] flex items-center gap-3">
+      {/* <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[500] flex items-center gap-3">
         <div className='absolute left-1/2 -translate-x-1/2 bottom-6' ><Mic size={32} /></div>
+      </div> */}
+      <div onClick={handleRecordingFinished}>
+        <ShatterMicButton />
       </div>
+
+      {/* COMPONENT MỚI */}
+      <VoicePinPreview
+        isOpen={showPreview}
+        onClose={() => setShowPreview(false)}
+        data={voiceData}
+      />
     </main >
   );
 }
@@ -442,3 +463,4 @@ function CommentBubble({ name, text }: { name: string; text: string }) {
     </div>
   );
 }
+
