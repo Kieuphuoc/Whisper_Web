@@ -58,7 +58,7 @@
   --primary-foreground: #1394D4;
   --secondary: #1394D4;
   --secondary-foreground: #D5EEFF;
-  --secondary-navbar: rgba(102, 179, 223, 0.7);  
+  --secondary-navbar: rgba(102, 179, 223, 0.7);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
@@ -117,33 +117,35 @@
 }
 
 /* Reset Style cho Leaflet Popup của VoiceMarker */
-.custom-popup-reset .leaflet-popup-content-wrapper, 
+.custom-popup-reset .leaflet-popup-content-wrapper,
 .custom-popup-reset .leaflet-popup-tip {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .custom-popup-reset .leaflet-popup-content {
-    margin: 0 !important;
-    width: auto !important;
+  margin: 0 !important;
+  width: auto !important;
 }
 
 /* Font hashtag */
 .font-marker {
-    font-family: 'Gochi Hand', cursive;
+  font-family: 'Gochi Hand', cursive;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
-html, body {
+html,
+body {
   font-family: var(--font-inter), sans-serif;
 }
 
@@ -158,13 +160,45 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #b0c4de; 
-  border-radius: 9999px;    
+  background-color: #b0c4de;
+  border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 /* Hover effect */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #60a5fa; 
+  background-color: #60a5fa;
+}
+
+/* ==================== VOICE CLUSTER STYLES ==================== */
+
+/* Remove default cluster styling */
+.voice-cluster-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Cluster pulse animation */
+@keyframes clusterPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Override default marker cluster styles */
+.marker-cluster {
+  background: transparent !important;
+}
+
+.marker-cluster div {
+  background: transparent !important;
 }

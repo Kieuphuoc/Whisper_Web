@@ -1,4 +1,3 @@
-// components/VoiceMarker.tsx
 'use client';
 
 import { Marker, Popup } from "react-leaflet";
@@ -18,12 +17,17 @@ interface VoiceMarkerProps {
   };
 }
 
-export default function VoiceMarker({ data }: VoiceMarkerProps) {
-  // Fix lỗi icon mặc định leaflet nếu cần (tùy chọn)
-  // const customIcon = ...
+// Custom pin icon using the pin image
+const customPinIcon = L.icon({
+  iconUrl: '/assets/images/pin-nobg.png',
+  iconSize: [45, 50],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+});
 
+export default function VoiceMarker({ data }: VoiceMarkerProps) {
   return (
-    <Marker position={data.coords}>
+    <Marker position={data.coords} icon={customPinIcon}>
       <Popup
         maxWidth={500}
         closeButton={false}
@@ -31,7 +35,7 @@ export default function VoiceMarker({ data }: VoiceMarkerProps) {
       >
         {/* CONTAINER CHÍNH */}
         <div className="flex items-center relative mt-8 ml-2 font-sans text-left w-[550px] group/container">
-          
+
           {/* PHẦN 1: HÌNH ẢNH (LAYER TRÊN CÙNG) */}
           <div className="relative z-30 shrink-0 w-70 h-70 transform -rotate-12 group-hover/container:rotate-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] cursor-pointer perspective-1000 origin-center">
             <img
@@ -43,7 +47,7 @@ export default function VoiceMarker({ data }: VoiceMarkerProps) {
 
           {/* PHẦN 2: NỘI DUNG (LAYER DƯỚI) */}
           <div className="relative z-10 flex-1 bg-white text-slate-700 p-4 pl-20 pr-4 rounded-r-2xl rounded-bl-[20px] shadow-xl -ml-16 min-h-[220px] flex flex-col justify-between border border-slate-100">
-            
+
             {/* Header Info */}
             <div className="mb-2">
               <div className="flex justify-between items-start">
