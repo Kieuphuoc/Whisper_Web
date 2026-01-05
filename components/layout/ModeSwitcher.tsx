@@ -6,8 +6,6 @@ import { clsx } from "clsx";
 export default function RadarFilterSimple() {
   const [activeTab, setActiveTab] = useState("Public");
 
-  const counts = { Public: 42, Friend: 8, Private: 3 };
-
   const tabs = [
     { id: "Public", icon: Globe, label: "Public" },
     { id: "Friend", icon: Users, label: "Friends" },
@@ -27,7 +25,7 @@ export default function RadarFilterSimple() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={clsx(
-                "relative flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 z-10",
+                "relative flex items-center gap-2 px-4 py-2 text-b font-medium rounded-full transition-colors duration-200 z-10",
                 isActive ? "text-white" : "text-slate-500 hover:text-slate-900"
               )}
             >
@@ -44,14 +42,6 @@ export default function RadarFilterSimple() {
               <Icon size={16} strokeWidth={2.5} />
               
               <span>{tab.label}</span>
-              
-              {/* Số lượng */}
-              <span className={clsx(
-                "ml-1 text-[10px] px-1.5 rounded-full",
-                isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
-              )}>
-                {counts[tab.id]}
-              </span>
             </button>
           );
         })}
