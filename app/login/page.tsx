@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { Mail, Lock, Sun, Moon, Eye, EyeOff, Check, ArrowRight, Fingerprint, Cloud, Star } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Check, ArrowRight, Fingerprint } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import DarkModeToggle from "@/components/layout/DarkModeToggle";
+import DarkModeToggle from "@/components/layout/ThemeToggle";
 
 export default function LoginPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -20,7 +20,6 @@ export default function LoginPage() {
     }, 2000);
   };
 
-  // Animation variants cho Input Underline
   const inputVariants = {
     rest: { width: "0%", opacity: 0 },
     focus: { width: "100%", opacity: 1, transition: { duration: 0.3 } }

@@ -1,15 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Cloud } from "lucide-react";
 
-interface DarkModeToggleProps {
+interface ThemeToggleProps {
   isDarkMode: boolean;
   setIsDarkMode: (value: boolean) => void;
 }
 
-const DarkModeToggle = ({ isDarkMode, setIsDarkMode }: DarkModeToggleProps) => {
+const ThemeToggle = ({ isDarkMode, setIsDarkMode }: ThemeToggleProps) => {
   return (
     <div className="absolute top-6 right-6 z-50">
       <button
@@ -77,4 +76,4 @@ const DarkModeToggle = ({ isDarkMode, setIsDarkMode }: DarkModeToggleProps) => {
   );
 };
 
-export default DarkModeToggle;
+export default ThemeToggle;

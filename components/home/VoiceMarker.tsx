@@ -1,33 +1,13 @@
-// components/VoiceMarker.tsx
 'use client';
-
 import { Marker, Popup } from "react-leaflet";
-import { Pin, Share2, Heart } from "lucide-react"; // Import icon từ lucide-react
-import L from "leaflet";
+import { Pin, Share2, Heart } from "lucide-react";
+import { VoicePin } from "@/types/voicepin";
 
-// Định nghĩa kiểu dữ liệu cho props (nếu dùng TypeScript)
-interface VoiceMarkerProps {
-  data: {
-    id: string | number;
-    coords: [number, number]; // [lat, lng]
-    title?: string;
-    location?: string;
-    date?: string;
-    imageUrl?: string;
-    audioUrl?: string;
-  };
-}
 
-export default function VoiceMarker({ data }: VoiceMarkerProps) {
-  // Fix lỗi icon mặc định leaflet nếu cần (tùy chọn)
-  // const customIcon = ...
-
+export default function VoiceMarker({ data }: VoicePin) {
   return (
-    <Marker position={data.coords}>
-      <Popup
-        maxWidth={500}
-        closeButton={false}
-        className="!bg-transparent !border-none !shadow-none custom-popup-reset"
+    <Marker position={[data.lat, data.lng]}>
+      <Popup maxWidth={500} closeButton={false} className="!bg-transparent !border-none !shadow-none custom-popup-reset"
       >
         {/* CONTAINER CHÍNH */}
         <div className="flex items-center relative mt-8 ml-2 font-sans text-left w-[550px] group/container">
@@ -56,26 +36,23 @@ export default function VoiceMarker({ data }: VoiceMarkerProps) {
               </div>
 
               <div className="flex items-center gap-1 text-[11px] text-slate-500 font-medium mt-1">
-                {/* Thay thế thẻ <i> bằng icon nếu muốn, hoặc giữ nguyên nếu đã import FontAwesome */}
                 <i className="fa-solid fa-location-dot text-rose-500"></i>
                 <span className="truncate max-w-[150px]">{data.location || "New York City, US"}</span>
               </div>
             </div>
 
-            {/* Audio Player Tối giản */}
             <div className="bg-slate-50 rounded-full p-1 pl-1 pr-3 flex items-center gap-2 mb-3 border border-slate-100">
               <div className="w-6 h-6 rounded-full bg-slate-800 text-white flex items-center justify-center cursor-pointer hover:bg-black transition-colors shrink-0">
                 <i className="fa-solid fa-play text-[8px] ml-0.5"></i>
               </div>
-              {/* Waveform giả lập */}
               <div className="flex items-center gap-[2px] h-3 w-full opacity-50">
-                {[...Array(10)].map((_, i) => (
+                {/* {[...Array(10)].map((_, i) => (
                   <div
                     key={i}
                     className="w-[3px] bg-slate-800 rounded-full"
                     style={{ height: `${20 + Math.random() * 80}%` }}
                   ></div>
-                ))}
+                ))} */}
               </div>
             </div>
 
@@ -99,8 +76,6 @@ export default function VoiceMarker({ data }: VoiceMarkerProps) {
     </Marker>
   );
 }
-
-// Component con cho nút bấm để code gọn hơn
 const ActionButton = ({ icon: Icon }: { icon: any }) => (
   <button className="group/btn flex flex-col items-center gap-1 text-gray-300 hover:text-black transition-colors">
     <Icon strokeWidth={2.5} size={14} className="group-hover/btn:scale-110 transition-transform" />

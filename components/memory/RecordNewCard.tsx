@@ -8,7 +8,6 @@ const RecordNewCard = () => {
 
   return (
     <>
-      {/* Nút mở modal */}
       <motion.button
         onClick={() => setOpen(true)}
         initial={{ opacity: 0, scale: 0.9 }}

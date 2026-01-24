@@ -26,3 +26,5 @@ export interface VoiceComment {
   content: string;
   createdAt: string;
 }
+
+export type VoiceVisibility = "private" | "friends" | "public";
