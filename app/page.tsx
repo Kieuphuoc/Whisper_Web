@@ -1,22 +1,25 @@
-"use client";
+'use client';
+
 import Link from "next/link";
-import { VoiceVisibilitySelector } from '@/components/home/VoiceVisibilitySelector';
+import { useEffect, useState } from "react";
 import Map from '@/components/home/Map';
-import { useEffect, useState } from 'react';
-import { VoiceVisibility } from "@/types/voicepin";
-import { useRecord } from "@/hooks/useRecord";
+import { VoiceVisibilitySelector } from '@/components/home/VoiceVisibilitySelector';
 import { RecordButton } from "@/components/home/RecordButton";
 import { WhispererBadge } from "@/components/layout/WhispererBadge";
+import PinPreview from "@/components/home/PinPreview";
+import { useRecord } from "@/hooks/useRecord";
+import { VoiceVisibility } from "@/types/voicepin";
 
-export default function HomeWhisper() {
+export default function HomeWhisperClient() {
   const [visibility, setVisibility] = useState<VoiceVisibility>("public");
   const { isRecording, onRecordPress, mediaBlobUrl } = useRecord();
+
   useEffect(() => {
-  if (mediaBlobUrl) {
-    console.log("Voice URL:", mediaBlobUrl);
-  }
-}, [mediaBlobUrl]);
-console.log("Re-render HomeWhisper component");
+    if (mediaBlobUrl) {
+      console.log("Voice URL:", mediaBlobUrl);
+      console.log("PinPreview should now be visible!");
+    }
+  }, [mediaBlobUrl]);
 
   return (
     <main className="relative w-screen h-screen overflow-hidden bg-gradient-to-br from-[#dfe7ff] via-[#edf1ff] to-white">
@@ -24,13 +27,18 @@ console.log("Re-render HomeWhisper component");
         <VoiceVisibilitySelector
           value={visibility}
           onChange={setVisibility}
-          disabledModes={["public"]} //LƯU Ý
+          disabledModes={["public"]}
         />
         <Link href="/login"><WhispererBadge /></Link>
       </div>
+
       <Map />
       <RecordButton isRecording={isRecording} onClick={onRecordPress} />
-    </main >
+      {mediaBlobUrl && (
+        <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-[500]">
+          <PinPreview />
+        </div>
+      )}
+    </main>
   );
 }
-

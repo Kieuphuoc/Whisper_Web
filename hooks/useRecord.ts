@@ -1,3 +1,4 @@
+'use client';
 import { useEffect } from "react";
 import { useReactMediaRecorder } from "react-media-recorder";
 

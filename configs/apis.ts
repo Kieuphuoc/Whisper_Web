@@ -6,20 +6,20 @@ const defaultAxios = axios.create({
   timeout: 10000,
 });
 
-
-
 export const endpoints = {
   voice: "/voice/",
-  createVoicePin: "/voice/",
-  voicePublic: "/voice/public/",
-  voiceFriends: "/voice/friends/",
-  voiceDetail: (id: string | number): string => `/voice/${id}/`,
-  voiceReactions: (id: string | number): string => `/voice/${id}/reactions/`,
-  voiceComments: (id: string | number): string => `/voice/${id}/comments/`,
-  commentReplies: (commentId: string | number): string => `/comments/${commentId}/replies/`,
-  translate: (sourceText: string, targetLang = 'vi'): string => `/translate/?q=${encodeURIComponent(sourceText)}&target=${encodeURIComponent(targetLang)}`,
+  voiceDetail: (id: string | number) => `/voice/${id}/`,
+  voiceReactions: (id: string | number) => `/voice/${id}/reactions/`,
+  voiceComments: (id: string | number) => `/voice/${id}/comments/`,
+
+  // filter
+  voicesPublic: "/voices/?visibility=public",
+  voicesFriends: "/voices/?visibility=friends",
+
+  // voicePublic: "/voice/public/",
+  // voiceFriends: "/voice/friends/",
+  commentReplies: (commentId: string | number) => `/comments/${commentId}/replies/`,
   login: "/auth/login/",
-  review: (event_id: string | number): string => `/event/${event_id}/reviews/`,
 };
 
 export const authApis = (token: string): AxiosInstance => {

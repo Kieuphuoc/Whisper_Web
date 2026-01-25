@@ -1,3 +1,4 @@
+'use client';
 import { Mic } from "lucide-react";
 import { motion } from "framer-motion";
 import { clsx } from "clsx";
@@ -41,7 +42,6 @@ export function RecordButton({ isRecording, onClick }: RecordButtonProps) {
         >
           <Mic size={28} strokeWidth={2.5} />
         </button>
-        
       </div>
     </div>
   );
