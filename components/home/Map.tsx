@@ -36,6 +36,7 @@ export default function Map() {
         {userLoc && <FocusMyLocation loc={userLoc} />}
         {userLoc && <Marker position={userLoc}><Popup>Bạn đang ở đây</Popup></Marker>}
         {voicePins.map(p => <VoiceMarker key={p.id} data={p} />)}
+        
       </MapContainer>
 
       <button

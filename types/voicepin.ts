@@ -1,14 +1,25 @@
-
 export interface VoicePin {
   id: string;
-  audioUrl: string;
-  duration: number;       
-  createdAt: string;      
+
+  // map
   lat: number;
   lng: number;
-  emotion?: string;       
-  ownerId: string;       
-  memoryId?: string;      
+
+  // audio
+  audioUrl: string;
+  duration: number;
+
+  // UI
+  title?: string;
+  imageUrl?: string;
+  location?: string;
+  date?: string;
+  emotion?: string;
+
+  // system
+  createdAt: string;
+  ownerId: string;
+  memoryId?: string;
 }
 
 export interface VoiceReaction {

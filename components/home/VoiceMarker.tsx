@@ -4,7 +4,7 @@ import { Pin, Share2, Heart } from "lucide-react";
 import { VoicePin } from "@/types/voicepin";
 
 
-export default function VoiceMarker({ data }: VoicePin) {
+export default function VoiceMarker({ data }: { data: VoicePin }) {
   return (
     <Marker position={[data.lat, data.lng]}>
       <Popup maxWidth={500} closeButton={false} className="!bg-transparent !border-none !shadow-none custom-popup-reset"

@@ -6,37 +6,57 @@ import { VoicePin, VoiceReaction, VoiceComment } from "@/types/voicepin";
 
 export const voicePins: VoicePin[] = [
   {
-    id: "vp_001",
-    audioUrl: "/mock/audio/rainy-walk.mp3",
-    duration: 42,
-    createdAt: "2025-01-20T16:30:00Z",
-    lat: 10.7769,
-    lng: 106.7009,
-    emotion: "calm",
-    ownerId: "user_01",
-    memoryId: "mem_001"
-  },
-  {
-    id: "vp_002",
-    audioUrl: "/mock/audio/afternoon-rain.mp3",
-    duration: 58,
-    createdAt: "2025-01-21T09:15:00Z",
+    id: "vp-001",
     lat: 10.762622,
     lng: 106.660172,
+
+    audioUrl: "/audio/rainy-day.mp3",
+    duration: 42,
+
+    title: "Rainy Afternoon",
+    imageUrl: "https://i.pinimg.com/736x/c9/8c/c4/c98cc4f40e85eb0107489c577ecb381d.jpg",
+    location: "Ho Chi Minh City, VN",
+    date: "Oct 14",
     emotion: "sad",
-    ownerId: "user_02",
-    memoryId: "mem_002"
+
+    createdAt: "2025-10-14T09:30:00Z",
+    ownerId: "user-001",
+    memoryId: "mem-001",
   },
   {
-    id: "vp_003",
-    audioUrl: "/mock/audio/quiet-hub.mp3",
-    duration: 33,
-    createdAt: "2025-01-22T14:05:00Z",
-    lat: 10.8231,
-    lng: 106.6297,
-    ownerId: "user_01"
-  }
+    id: "vp-002",
+    lat: 10.776889,
+    lng: 106.700806,
+
+    audioUrl: "/audio/city-night.mp3",
+    duration: 28,
+
+    title: "City at Night",
+    imageUrl: "https://i.pinimg.com/736x/2e/9f/6c/2e9f6c4a7d1e9d7c7a0d4c1f5b2f4c6e.jpg",
+    location: "District 1, HCMC",
+    date: "Nov 02",
+    emotion: "wow",
+
+    createdAt: "2025-11-02T18:45:00Z",
+    ownerId: "user-002",
+  },
+  {
+    id: "vp-003",
+    lat: 10.748092,
+    lng: 106.676392,
+
+    audioUrl: "/audio/morning-walk.mp3",
+    duration: 55,
+
+    title: "Morning Walk",
+    location: "District 7, HCMC",
+    emotion: "love",
+
+    createdAt: "2025-11-20T06:10:00Z",
+    ownerId: "user-001",
+  },
 ];
+
 
 /* =======================
    REACTIONS
