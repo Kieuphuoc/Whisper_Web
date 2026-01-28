@@ -9,30 +9,23 @@ import VoiceCard from "@/components/home/VoiceCard";
 import FriendsSidebar from "@/components/home/FriendsSidebar";
 import { useRecord } from "@/hooks/useRecord";
 import { useGeolocation } from "@/hooks/useGeolocation";
+import { useAuth } from "@/hooks/useAuth";
+import { useAppInit } from "@/hooks/useAppInit";
 import { VoiceVisibility } from "@/types/voicepin";
 import MapClient from "@/components/home/MapClient";
 import { createVoicePin } from "@/lib/api";
+import { motion, AnimatePresence } from "framer-motion";
+import { Loader2, Fingerprint } from "lucide-react";
 
 export default function HomeWhisperClient() {
+  const { user, token, isAuthenticated, isLoading: isAuthLoading } = useAuth();
+  const { isReady, isPreloading } = useAppInit();
+
   // Core state
   const [visibility, setVisibility] = useState<VoiceVisibility>("public");
   const { isRecording, onRecordPress, mediaBlobUrl, audioBlob, clearBlobUrl } = useRecord();
   const { location } = useGeolocation();
   const [open, setOpen] = useState(false);
-
-  // Auth state
-  const [token, setToken] = useState<string | null>(null);
-  const [userId, setUserId] = useState<number | null>(null);
-
-  useEffect(() => {
-    // Get token and userId from localStorage on mount
-    const savedToken = localStorage.getItem('token');
-    if (savedToken) {
-      setToken(savedToken);
-      const savedUserId = localStorage.getItem('userId');
-      if (savedUserId) setUserId(parseInt(savedUserId));
-    }
-  }, []);
 
   // VoiceCard state
   const [title, setTitle] = useState("");
@@ -60,7 +53,6 @@ export default function HomeWhisperClient() {
   };
 
   const handleRetry = () => {
-    // Reset all preview state and allow re-recording
     setOpen(false);
     clearBlobUrl();
     setTitle("");
@@ -98,7 +90,6 @@ export default function HomeWhisperClient() {
         imageFile: imageFile || undefined,
       }, token);
 
-      // Success - reset and refresh
       handleClose();
       window.location.reload();
     } catch (error) {
@@ -108,6 +99,32 @@ export default function HomeWhisperClient() {
       setIsSubmitting(false);
     }
   };
+
+  // If auth is loading or preloading is not finished, show splash screen
+  if (isAuthLoading || !isReady) {
+    return (
+      <div className="w-screen h-screen flex flex-col items-center justify-center bg-white">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="flex flex-col items-center gap-6"
+        >
+          <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center text-primary relative">
+            <Fingerprint size={40} />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 border-2 border-primary/20 border-t-primary rounded-3xl"
+            />
+          </div>
+          <div className="text-center">
+            <h2 className="text-xl font-bold text-slate-800">Whisper</h2>
+            <p className="text-sm text-slate-400 font-medium">Đang khởi tạo tâm hồn...</p>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   // Determine recording button state
   const showRetryButton = !!mediaBlobUrl && open;
@@ -130,14 +147,14 @@ export default function HomeWhisperClient() {
           onChange={setVisibility}
           disabledModes={[]}
         />
-        <Link href="/login"><WhispererBadge /></Link>
+        <Link href={`/profile/${user?.id}`}><WhispererBadge /></Link>
       </div>
 
       {/* Map - auto-focuses on user location */}
       <MapClient userLocation={location} />
 
       {/* Friends Sidebar (Hover Reveal) */}
-      <FriendsSidebar userId={userId} token={token} />
+      <FriendsSidebar userId={user?.id || null} token={token} />
 
       {/* Record/Retry Button */}
       <RecordButton
@@ -171,6 +188,7 @@ export default function HomeWhisperClient() {
     </main>
   );
 }
+
 
 
 

@@ -2,7 +2,9 @@ Frontend:
 + Tiếp theo là làm nút retry khi đang hiện preview => Bỏ preview cũ, thu âm lại.
 + Mới vô web là focus vào vị trí lên.
 + Lấy data từ voicepin, friend. UI friend hover vào mới hiện.
-+ Tôi muốn bấm esc cũng đóng voicepin, bấm bên ngoài voicepin thì cũng đóng voicepin.
++ Phải
 
 Backend:
 + Recently voicepin
++ Cần phải trả về user kèm token sau khi login.
++ Sửa trường username thành gmail cần ko?
