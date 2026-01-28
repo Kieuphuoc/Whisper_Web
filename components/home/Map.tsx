@@ -9,6 +9,7 @@ import { voicePins } from "@/data/mockVoiceFlow";
 
 function FocusMyLocation({ loc }: { loc: [number, number] }) {
   const map = useMap();
+  if (typeof window === "undefined") return null;
   useEffect(() => { map.flyTo(loc, 16, { animate: true, duration: 1.2 }); }, [loc, map]);
   return null;
 }

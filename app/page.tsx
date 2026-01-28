@@ -9,6 +9,7 @@ import { WhispererBadge } from "@/components/layout/WhispererBadge";
 import PinPreview from "@/components/home/PinPreview";
 import { useRecord } from "@/hooks/useRecord";
 import { VoiceVisibility } from "@/types/voicepin";
+import MapClient from "@/components/home/MapClient";
 
 export default function HomeWhisperClient() {
   const [visibility, setVisibility] = useState<VoiceVisibility>("public");
@@ -32,7 +33,7 @@ export default function HomeWhisperClient() {
         <Link href="/login"><WhispererBadge /></Link>
       </div>
 
-      <Map />
+      <MapClient />
       <RecordButton isRecording={isRecording} onClick={onRecordPress} />
       {mediaBlobUrl && (
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-[500]">
