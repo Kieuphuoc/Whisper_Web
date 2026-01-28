@@ -2,8 +2,7 @@ Frontend:
 + Tiếp theo là làm nút retry khi đang hiện preview => Bỏ preview cũ, thu âm lại.
 + Mới vô web là focus vào vị trí lên.
 + Lấy data từ voicepin, friend. UI friend hover vào mới hiện.
-
-
++ Tôi muốn bấm esc cũng đóng voicepin, bấm bên ngoài voicepin thì cũng đóng voicepin.
 
 Backend:
 + Recently voicepin

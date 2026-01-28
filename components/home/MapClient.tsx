@@ -6,6 +6,11 @@ const Map = dynamic(() => import("./Map"), {
   ssr: false,
 });
 
-export default function MapClient() {
-  return <Map />;
+interface MapClientProps {
+  userLocation?: { lat: number; lng: number } | null;
 }
+
+export default function MapClient({ userLocation }: MapClientProps) {
+  return <Map userLocation={userLocation} />;
+}
+
